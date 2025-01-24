@@ -1,0 +1,80 @@
+<div class="login-container">
+  <div class="corrsol">
+    <div class="logo">
+      <img src="https://vtputkal.odisha.gov.in/wp-content/themes/learning/images/odisha_logo.png" alt="govt-logo" width="80" loading="lazy">
+      <div>
+        <b>Document Management System</b>
+        <p>Revenue and Desaster Management Department</p>
+        <p>Govenment of Odisha</p>
+      </div>
+    </div>
+    <c-carousel>
+      <c-carousel-indicators></c-carousel-indicators>
+      <c-carousel-inner>
+        <c-carousel-item *ngFor="let slide of slides">
+          <img [src]="slide.src" alt="{{ slide.title }}" class="d-block w-100" loading="lazy" />
+
+        </c-carousel-item>
+      </c-carousel-inner>
+      <c-carousel-control [routerLink] caption="Previous" direction="prev"></c-carousel-control>
+      <c-carousel-control [routerLink] caption="Next" direction="next"></c-carousel-control>
+    </c-carousel>
+
+  </div>
+
+  <div class="login-form">
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm.value)">
+      <strong style="color: rgb(90, 152, 218);margin-left: 30px;">Login</strong>
+      <div class="form-group">
+        <div class="input-div">
+          <div>
+            <i class="fa-solid fa-user" style="color: gray;"></i>
+            <input id="username" type="text" class="form-control" placeholder="username" ngModel name="username" />
+          </div>
+        </div>
+        <!-- <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched">
+                <small class="text-danger">Username is required.</small>
+              </div> -->
+      </div>
+
+      <div class="form-group">
+        <div class="input-div">
+          <div>
+            <i class="fa-solid fa-lock" style="color: gray;"></i>
+            <input #password id="password" type="password" class="form-control" placeholder="password" ngModel
+              name="password" />
+          </div>
+
+          <i #icon class="fa-solid fa-eye" style="color: gray; cursor: pointer;"
+            (click)="showPassword(password,icon)"></i>
+        </div>
+        <!-- <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+                <small class="text-danger">Password is required.</small>
+              </div> -->
+      </div>
+      <div class="capcha">
+        <img
+          src="https://images.fastcompany.com/image/upload/f_webp,c_fit,w_1920,q_auto/fc/captcha-internet-translate.jpg"
+          width="140px" alt="captcha" style="mix-blend-mode: hard-light;">
+        <div class="input-div">
+          <div>
+            <i class="fa-solid fa-unlock" style="color: gray;"></i>
+            <input type="text" placeholder="Captcha" ngModel name="captcha">
+          </div>
+
+        </div>
+
+      </div>
+      <div class="forgot-password" style="width: 100%; text-align: end; margin-bottom: 15px;">
+        <a routerLink="forgot-password"
+          style="cursor:pointer; text-decoration: none; color: rgb(125 132 143); font-size:15px;font-weight:500;">
+          Forgot password</a>
+      </div>
+
+      <button type="submit" class="btnn"><i class="fa-solid fa-right-to-bracket" style="margin-right: 7px;"></i>
+        Login</button>
+    </form>
+
+  </div>
+
+</div>
