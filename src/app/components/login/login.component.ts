@@ -1,46 +1,62 @@
-import { Component } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { Component,ViewChild  } from '@angular/core';
 import { FormsModule, NgForm  } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-
-import {
-  CarouselComponent,
-  CarouselControlComponent,
-  CarouselIndicatorsComponent,
-  CarouselInnerComponent,
-  CarouselItemComponent,
-  ThemeDirective
-} from '@coreui/angular';
+import { Router } from '@angular/router';
+import { NgbCarousel, NgbCarouselModule, NgbSlideEvent, NgbSlideEventSource} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-login',
-  imports: [FormsModule ,ThemeDirective, CarouselComponent, CarouselIndicatorsComponent, CarouselInnerComponent, NgFor, CarouselItemComponent, CarouselControlComponent, RouterLink],
+  imports: [FormsModule,NgbCarouselModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  providers: [],
 })
 export class LoginComponent {
 
-  constructor() {}
+  // images = [700, 533, 807, 124].map((n) => `https://picsum.photos/id/${n}/900/500`);
+  images = [
+    'https://img.freepik.com/free-photo/still-life-documents-stack_23-2151088805.jpg',
+    'https://images.pexels.com/photos/357514/pexels-photo-357514.jpeg?auto=compress&cs=tinysrgb&w=600',
+    'https://cdn.prod.website-files.com/62045da4270c887c4de9c45f/6206f72af2bab0767eeb1690_digitaldocument.jpeg'
+  ]
+
+  paused = false;
+	unpauseOnArrow = false;
+	pauseOnIndicator = false;
+	pauseOnHover = true;
+	pauseOnFocus = false;
+
+  constructor(private router: Router) { }
+
+	@ViewChild('carousel', { static: true }) carousel!: NgbCarousel;
+
+
+  //carousel
+
+	togglePaused() {
+		if (this.paused) {
+			this.carousel.cycle();
+		} else {
+			this.carousel.pause();
+		}
+		this.paused = !this.paused;
+	}
+
+	onSlide(slideEvent: NgbSlideEvent) {
+		if (
+			this.unpauseOnArrow &&
+			slideEvent.paused &&
+			(slideEvent.source === NgbSlideEventSource.ARROW_LEFT || slideEvent.source === NgbSlideEventSource.ARROW_RIGHT)
+		) {
+			this.togglePaused();
+		}
+		if (this.pauseOnIndicator && !slideEvent.paused && slideEvent.source === NgbSlideEventSource.INDICATOR) {
+			this.togglePaused();
+		}
+	}
 
 
   //form control
   onSubmit(formData:NgForm){
     console.log(formData);
-  }
-
-
-  //carousel
-  slides: any[] = new Array(3).fill({ id: -1, src: '', title: '', subtitle: '' });
-
-  ngOnInit(): void {
-    this.slides[0] = {
-      src: 'https://img.freepik.com/free-photo/still-life-documents-stack_23-2151088805.jpg'
-    };
-    this.slides[1] = {
-      src: 'https://images.pexels.com/photos/357514/pexels-photo-357514.jpeg?auto=compress&cs=tinysrgb&w=600'
-    };
-    this.slides[2] = {
-      src: 'https://cdn.prod.website-files.com/62045da4270c887c4de9c45f/6206f72af2bab0767eeb1690_digitaldocument.jpeg'
-    };
   }
 
   //show & hide password
@@ -50,5 +66,9 @@ export class LoginComponent {
 
      icon.classList.toggle("fa-eye-slash");
      icon.classList.toggle("fa-eye");
+  }
+
+  goto(url:string){
+    this.router.navigate([url]);
   }
 }
