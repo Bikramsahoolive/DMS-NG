@@ -75,6 +75,7 @@ ngb-carousel img {
   border-radius: 6px;
   font-size: 12px;
   cursor: pointer;
+  padding: 5px;
 }
 
 .login-form .btnn:hover {
@@ -83,11 +84,12 @@ ngb-carousel img {
 
 .login-form input {
   padding: 0 0 0 10px !important;
-  width: 80%;
+  width: 90%;
   display: inline;
   border: none;
   outline: none;
   box-shadow: none;
+  margin: 4px;
 }
 
 .capcha {
@@ -101,7 +103,7 @@ ngb-carousel img {
   border: 1px solid #dbd2d2;
   border-radius: 7px;
   padding-left: 10px;
-  margin: 20px;
+  margin: 20px 20px 0 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
