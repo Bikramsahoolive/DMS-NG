@@ -1,0 +1,50 @@
+<nz-layout>
+    <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
+      <div class="logo" style="">
+        <img src="	https://vtputkal.odisha.gov.in/wp-content/themes/learning/images/odisha_logo.png" width="70" alt="govt-logo">
+      </div>
+      <ul nz-menu nzTheme="dark" nzMode="inline">
+        <li nz-menu-item>
+            <nz-icon nzType="desktop" nzTheme="outline" />
+            <span>Dashboard</span>
+          </li>
+        <li nz-submenu nzTitle="Setup" nzIcon="appstore">
+          <ul>
+            <li nz-menu-item>Tom</li>
+            <li nz-menu-item>Bill</li>
+            <li nz-menu-item>Alex</li>
+          </ul>
+        </li>
+        <li nz-menu-item>
+            <nz-icon nzType="rest" nzTheme="outline" />
+            <span>Storage information</span>
+          </li>
+      </ul>
+    </nz-sider>
+    <nz-layout>
+      <nz-header>
+        <div>
+            <span
+          class="trigger"
+          nz-icon
+          [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
+          (click)="isCollapsed = !isCollapsed"
+        ></span>
+        <b style="color: rgb(61 87 254);">Document Management System, Government Of Odisha</b>
+        </div>
+
+        <div style="padding: 0 30px;">
+            <small style="color: rgb(61 87 254);">Updated "&#64;" 3:32:09 PM on 1th Mar</small>
+            <i class="fa-regular fa-user" style="color: #2470fd; border: 2px solid #9ee5fc; padding: 9px 10px; border-radius:50%; cursor: pointer; background-color: #d6eff7; margin-left:10px;"></i>
+        </div>
+      </nz-header>
+      <nz-content>
+        <nz-breadcrumb>
+          <nz-breadcrumb-item>User</nz-breadcrumb-item>
+          <nz-breadcrumb-item>Dashboard</nz-breadcrumb-item>
+        </nz-breadcrumb>
+        <div class="inner-content">Hello Bikram...</div>
+      </nz-content>
+      <nz-footer>Copyright &copy; 2024 Revenue and Desaster Management Department government Of Odisha All right reserved.</nz-footer>
+    </nz-layout>
+  </nz-layout>
