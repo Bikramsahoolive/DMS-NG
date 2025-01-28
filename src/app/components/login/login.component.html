@@ -57,65 +57,84 @@
         </ng-template> -->
 
       </ngb-carousel>
-    
-
   </div>
 
+  <!-- login form -->
+
   <div class="login-form">
-    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm.value)">
-      <strong style="color: rgb(90, 152, 218);margin-left: 30px;">Login</strong>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <h1 style="color: #0b5fad;font-size: x-large; margin-bottom: 30px;font-weight: 600;">Login</h1>
       <div class="form-group">
-        <div class="input-div">
+        <div  [ngClass]="loginForm.get('username')?.invalid && loginForm.get('username')?.touched && loginForm.get('username')?.dirty ? 'error-input' : 'input-div'">
           <div style="width: 100%;">
-            <i class="fa-solid fa-user" style="color: gray;"></i>
-            <input id="username" type="text" class="form-control" placeholder="username" ngModel name="username"/>
+            <nz-icon nzType="user" nzTheme="outline" />
+            <input id="username" type="text" class="form-control" placeholder="username" ngModel name="username" formControlName="username"/>
           </div>
         </div>
         <!-- <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched"> -->
-          <div style="text-align: center; width: 100%;">
-                <small class="text-danger" >Username is required.</small>
-              </div>
+          
+            <div style="text-align:start; width: 100%; height: 30px;">
+              @if (loginForm.get('username')?.invalid && loginForm.get('username')?.touched && loginForm.get('username')?.dirty) {
+              <small class="text-danger" >Username is required.</small>
+            }
+            </div>
+        
+          
       </div>
 
       <div class="form-group">
-        <div class="input-div">
+        <div [ngClass]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched && loginForm.get('password')?.dirty ? 'error-input' : 'input-div'">
           <div style="width: 100%;">
-            <i class="fa-solid fa-lock" style="color: gray;"></i>
-            <input #password id="password" type="password" class="form-control" placeholder="password" ngModel
-              name="password" />
+            <nz-icon nzType="lock" nzTheme="outline" />
+            <input #password id="password" type="password" class="form-control" placeholder="password" ngModel name="password" formControlName="password"/>
           </div>
 
           <i #icon class="fa-solid fa-eye" style="color: gray; cursor: pointer; font-size: 15px;padding: 5px;"
             (click)="showPassword(password,icon)"></i>
         </div>
-        <!-- <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"> -->
-          <div style="text-align: center; width: 100%;">
-                <small class="text-danger">Password is required.</small>
-              </div>
+        <div style="text-align:start; width: 100%; height: 30px;">
+          @if (loginForm.get('password')?.invalid && loginForm.get('password')?.touched && loginForm.get('password')?.dirty) {
+          <small class="text-danger" >Password is required.</small>
+        }
+        </div>
       </div>
       <div class="capcha">
         <img
           src="https://images.fastcompany.com/image/upload/f_webp,c_fit,w_1920,q_auto/fc/captcha-internet-translate.jpg"
           width="120px" alt="captcha" style="mix-blend-mode: hard-light;">
-        <div class="input-div">
-          <div>
+
+        <div  style="width: 100%;">
+
+          <div  [ngClass]="loginForm.get('captcha')?.invalid && loginForm.get('captcha')?.touched && loginForm.get('captcha')?.dirty ? 'error-input' : 'input-div'">
             <i class="fa-solid fa-unlock" style="color: gray;"></i>
-            <input type="text" placeholder="Captcha" ngModel name="captcha">
+            <input type="text" placeholder="Captcha" ngModel name="captcha" formControlName="captcha"/>
           </div>
+          
+          <div style="text-align:start; width: 100%; height: 30px;">
+            @if (loginForm.get('captcha')?.invalid && loginForm.get('captcha')?.touched && loginForm.get('captcha')?.dirty) {
+            <small class="text-danger" >Captcha is required.</small>
+          }
 
+          </div>
         </div>
-        <div style="text-align: center; width: 100%;">
-          <small class="text-danger">Captcha is required.</small>
-        </div>
-
       </div>
+
+
       <div class="forgot-password" style="width: 100%; text-align: end; margin-bottom: 15px;">
         <a (click)="goto('forgot-password')" style="cursor:pointer; text-decoration: none; color: rgb(125 132 143); font-size:15px;font-weight:500;">
           Forgot password</a>
       </div>
-
-      <button type="submit" class="btnn"><i class="fa-solid fa-right-to-bracket" style="margin-right: 7px;"></i>
-        Login</button>
+      @if (loginForm.invalid) {
+        <button style="background-color:gray; margin-right: 7px;" type="submit" [disabled]="true" class="btnn">
+          <nz-icon nzType="login" nzTheme="outline" />
+          Login</button>
+      }
+      @else {
+        <button type="submit" class="btnn">
+          <nz-icon nzType="login" nzTheme="outline" />
+          Login</button>
+      }
+      
     </form>
 
   </div>

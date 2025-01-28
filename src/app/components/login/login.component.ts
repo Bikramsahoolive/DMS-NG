@@ -1,15 +1,29 @@
 import { Component,ViewChild  } from '@angular/core';
-import { FormsModule, NgForm  } from '@angular/forms';
+import {CommonModule} from '@angular/common'
+import { ReactiveFormsModule,FormGroup,FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { NgbCarousel, NgbCarouselModule, NgbSlideEvent, NgbSlideEventSource} from '@ng-bootstrap/ng-bootstrap';
+import { NzIconModule, NzIconService } from 'ng-zorro-antd/icon';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
+import { LoginOutline,UserOutline,LockOutline  } from '@ant-design/icons-angular/icons';
 @Component({
   selector: 'app-login',
-  imports: [FormsModule,NgbCarouselModule],
+  imports: [NgbCarouselModule,ReactiveFormsModule,CommonModule,NzIconModule, NzInputModule, NzToolTipModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
   providers: [],
 })
 export class LoginComponent {
+ 
+
+   loginForm = new FormGroup({
+    username: new FormControl('',[Validators.required,Validators.minLength(3)]),
+    password: new FormControl('',[Validators.required,Validators.minLength(8),Validators.maxLength(16)]),
+    captcha: new FormControl('',[Validators.required]),
+  });
+
+
 
   // images = [700, 533, 807, 124].map((n) => `https://picsum.photos/id/${n}/900/500`);
   images = [
@@ -24,7 +38,9 @@ export class LoginComponent {
 	pauseOnHover = true;
 	pauseOnFocus = false;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,private iconService: NzIconService) {
+    this.iconService.addIcon(LoginOutline,UserOutline,LockOutline);
+   }
 
 	@ViewChild('carousel', { static: true }) carousel!: NgbCarousel;
 
@@ -55,8 +71,10 @@ export class LoginComponent {
 
 
   //form control
-  onSubmit(formData:NgForm){
-    console.log(formData);
+  onSubmit(){
+    console.log(this.loginForm.value);
+
+ 
   }
 
   //show & hide password

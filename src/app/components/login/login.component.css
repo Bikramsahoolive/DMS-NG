@@ -67,10 +67,12 @@ ngb-carousel img {
   justify-content: center;
 }
 
+
+
 .login-form .btnn {
   border: none;
   width: 100%;
-  background-color: rgb(22 120 255) !important;
+  background-color: rgb(22 120 255) ;
   color: white;
   border-radius: 6px;
   font-size: 12px;
@@ -84,7 +86,7 @@ ngb-carousel img {
 
 .login-form input {
   padding: 0 0 0 10px !important;
-  width: 90%;
+  width: 89%;
   display: inline;
   border: none;
   outline: none;
@@ -103,7 +105,15 @@ ngb-carousel img {
   border: 1px solid #dbd2d2;
   border-radius: 7px;
   padding-left: 10px;
-  margin: 20px 20px 0 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.error-input {
+  border: 1px solid red;
+  border-radius: 7px;
+  padding-left: 10px;
   display: flex;
   align-items: center;
   justify-content: space-between;
