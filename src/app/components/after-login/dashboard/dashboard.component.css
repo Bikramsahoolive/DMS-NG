@@ -41,3 +41,26 @@
   nz-footer {
     text-align: center;
   }
+  .menu-data{
+    border-radius: 8px;
+  }
+  .title{
+    color: rgb(61 87 254);
+    display: inline;
+    font-weight: 600;
+  }
+  
+
+  @media screen and (max-width:750px) {
+    .title{
+      display: none;
+    }
+    
+  }
+
+  @media screen and (max-width:370px) {
+    .logout{
+      display: none;
+    }
+    
+  }

@@ -73,7 +73,7 @@ export class LoginComponent {
   //form control
   onSubmit(){
     console.log(this.loginForm.value);
-
+    this.goto('dashboard')
  
   }
 

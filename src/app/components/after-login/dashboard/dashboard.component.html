@@ -4,18 +4,18 @@
         <img src="	https://vtputkal.odisha.gov.in/wp-content/themes/learning/images/odisha_logo.png" width="70" alt="govt-logo">
       </div>
       <ul nz-menu nzTheme="dark" nzMode="inline">
-        <li nz-menu-item>
+        <li nz-menu-item class="menu-data" (click)="goto('dashboard')">
             <nz-icon nzType="desktop" nzTheme="outline" />
             <span>Dashboard</span>
           </li>
         <li nz-submenu nzTitle="Setup" nzIcon="appstore">
           <ul>
-            <li nz-menu-item>Tom</li>
-            <li nz-menu-item>Bill</li>
-            <li nz-menu-item>Alex</li>
+            <li nz-menu-item class="menu-data">Tom</li>
+            <li nz-menu-item class="menu-data">Bill</li>
+            <li nz-menu-item class="menu-data">Alex</li>
           </ul>
         </li>
-        <li nz-menu-item>
+        <li nz-menu-item class="menu-data" (click)="goto('dashboard/storage-info')">
             <nz-icon nzType="rest" nzTheme="outline" />
             <span>Storage information</span>
           </li>
@@ -30,20 +30,39 @@
           [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
           (click)="isCollapsed = !isCollapsed"
         ></span>
-        <b style="color: rgb(61 87 254);">Document Management System, Government Of Odisha</b>
+        <p class="title">Document Management System, Government Of Odisha</p>
         </div>
 
         <div style="padding: 0 30px;">
-            <small style="color: rgb(61 87 254);">Updated "&#64;" 3:32:09 PM on 1th Mar</small>
-            <i class="fa-regular fa-user" style="color: #2470fd; border: 2px solid #9ee5fc; padding: 9px 10px; border-radius:50%; cursor: pointer; background-color: #d6eff7; margin-left:10px;"></i>
+          <!-- <small style="color: rgb(61 87 254); margin-right: 10px;">Updated &#64; 3:32:09 PM on 1th Mar</small> -->
+            <!-- <i class="fa-regular fa-user" style="color: #2470fd; border: 2px solid #9ee5fc; padding: 9px 10px; border-radius:50%; cursor: pointer; background-color: #d6eff7; margin-left:10px;"></i> -->
+
+            <div style="display: inline;">
+              <button nz-button nzType="default" nz-dropdown [nzDropdownMenu]="menu" style="border-radius: 8px;"><span class="logout">Profile Setup</span> <nz-icon nzType="user" /></button>
+      <nz-dropdown-menu #menu style="border-radius: 8px;">
+        <ul nz-menu>
+          <li nz-menu-item>
+            <a><nz-icon nzType="setting" nzTheme="outline" />  Setting</a>
+          </li>
+          <li nz-menu-item (click)="logout()">
+            <a><nz-icon nzType="logout" nzTheme="outline" />  Logout</a>
+          </li>
+        </ul>
+      </nz-dropdown-menu>
+      <!-- <button nz-button nzType="default" style="border-radius: 0 8px 8px 0;">
+        
+      </button> -->
+            </div>
         </div>
       </nz-header>
       <nz-content>
         <nz-breadcrumb>
-          <nz-breadcrumb-item>User</nz-breadcrumb-item>
           <nz-breadcrumb-item>Dashboard</nz-breadcrumb-item>
+          <!-- <nz-breadcrumb-item>Setup</nz-breadcrumb-item> -->
         </nz-breadcrumb>
-        <div class="inner-content">Hello Bikram...</div>
+        <div class="inner-content">
+          <router-outlet></router-outlet>
+        </div>
       </nz-content>
       <nz-footer>Copyright &copy; 2024 Revenue and Desaster Management Department government Of Odisha All right reserved.</nz-footer>
     </nz-layout>
