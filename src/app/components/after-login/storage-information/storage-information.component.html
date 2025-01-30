@@ -1,10 +1,10 @@
 <div>
     <div class="info-bar" style="width: 100%; height: auto; background-color: #e8f9ff; padding: 5px;">
-        <nz-tag [nzColor]="presetColors[5]" style="margin: 5px; border-radius: 5px;"><nz-icon nzType="star"  nzTheme="outline" style="color: red;" /> Please Select fields for show the Storage Information of each Tahasil</nz-tag>
+        <nz-tag [nzColor]="presetColors[5]" class="tag" style="margin: 5px; text-wrap:auto; border-radius: 5px;"><nz-icon nzType="star"  nzTheme="outline" style="color: red;" /> Please Select fields for show the Storage Information of each Tahasil</nz-tag>
         
         <div class="select-address">
 
-              <nz-select ngModel="lucy" nzAllowClear nzPlaceHolder="--Select District--" [(ngModel)]="selectedDistrictValue" [nzSuffixIcon]="'star'">
+              <nz-select ngModel="lucy" nzAllowClear nzPlaceHolder="--Select District--" [(ngModel)]="selectedDistrictValue" [nzSuffixIcon]="'star'" >
 
                 @for (item of districtervice.distInfo(); track $index) {
                     <nz-option nzValue={{item.districtName}} nzLabel={{item.odiaDistrictName}}></nz-option>
@@ -13,7 +13,7 @@
               </nz-select>
 
               <nz-select ngModel="lucy" nzAllowClear nzPlaceHolder="--Select Tahasil--" [(ngModel)]="selectedTahasilValue"  [nzSuffixIcon]="'star'">
-                <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option>
+                <!-- <nz-option nzValue="lucy" nzLabel="Lucy"></nz-option> -->
               </nz-select>
 
               
@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <div class="data-box" style="width: 100%; height: auto;box-shadow: 0px -1px 4px 0px #3399f8;border-radius: 10px 10px 0 0;" >
+    <div class="data-box" style="width: 100%; height:50vh;box-shadow: 0px -1px 4px 0px #3399f8;border-radius: 10px 10px 0 0;" >
 
         <div class="data-box-title" style="width: 100%; background-color: #3399f8; border-radius: 10px 10px 0 0; padding: 10px 20px; color: white;">
             <b>Tahasil wise Storage Information</b>

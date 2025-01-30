@@ -22,7 +22,9 @@ export class LoginComponent {
     password: new FormControl('',[Validators.required,Validators.minLength(8),Validators.maxLength(16)]),
     captcha: new FormControl('',[Validators.required]),
   });
-
+  invalidUsername:boolean=false;
+  invalidPassword:boolean=false;
+  invalidCaptcha:boolean=false;
 
 
   // images = [700, 533, 807, 124].map((n) => `https://picsum.photos/id/${n}/900/500`);
@@ -73,8 +75,21 @@ export class LoginComponent {
   //form control
   onSubmit(){
     console.log(this.loginForm.value);
-    this.goto('dashboard')
+    if(this.loginForm.invalid){
+      this.invalidUsername = true;
+      this.invalidPassword =true;
+      this.invalidCaptcha =true;
+    }else{
+      this.goto('admin/dashboard')
+    }
+    
  
+  }
+
+  onChange(field:string){
+    if(field==='username')this.invalidUsername = false;
+    if(field==='password')this.invalidPassword = false;
+    if(field==='captcha')this.invalidCaptcha = false;
   }
 
   //show & hide password

@@ -1,0 +1,57 @@
+<div class="user-setup">
+    <div class="title" style="display:flex; width:100%;">
+        <div class="title-name" style="width: 60%;">
+            <h6>User Setup</h6>
+        </div>
+        <div class="search" style="width: 40%;">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <input type="text" nz-input placeholder="Search Here..." />
+              </nz-input-group>
+              <ng-template #suffixIconButton>
+                <button nz-button nzType="default" nzSearch><nz-icon nzType="search" /></button>
+              <button nz-button nzType="primary" style="background-color: green; border-radius: 5px; margin-left: 10px;"><nz-icon nzType="file-excel" nzTheme="outline" />Excel</button>
+
+              </ng-template>
+        </div>
+        
+    </div>
+
+    <div class="table">
+        <nz-table #filterTable [nzData]="listOfData" nzTableLayout="fixed">
+      <thead >
+        <tr>
+          @for (column of listOfColumns; track column) {
+            <th
+              [nzSortOrder]="column.sortOrder"
+              [nzSortFn]="column.sortFn"
+              [nzSortDirections]="column.sortDirections"
+              [nzFilterMultiple]="column.filterMultiple"
+              [nzFilters]="column.listOfFilter"
+              [nzFilterFn]="column.filterFn"
+              style="background-color: rgb(0, 132, 255); color: white;"
+            >
+              {{ column.name }}
+            </th>
+          }
+        </tr>
+      </thead>
+      <tbody>
+        @for (data of filterTable.data; track data) {
+          <tr>
+            <td>{{ data.status }}</td>
+            <td>{{ data.displayName }}</td>
+            <td>{{ data.role }}</td>
+          </tr>
+        }
+      </tbody>
+    </nz-table>
+
+   
+    </div>
+    <div class="type">
+        <nz-float-button nzType="primary" style="right: 24px" [nzIcon]="icon"></nz-float-button>
+      </div>
+      <ng-template #icon>
+        <nz-icon nzType="plus-circle" nzTheme="twotone" />
+      </ng-template>
+</div>

@@ -1,21 +1,25 @@
 <nz-layout>
     <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
-      <div class="logo" style="">
+      <div class="logo">
         <img src="	https://vtputkal.odisha.gov.in/wp-content/themes/learning/images/odisha_logo.png" width="70" alt="govt-logo">
       </div>
       <ul nz-menu nzTheme="dark" nzMode="inline">
-        <li nz-menu-item class="menu-data" (click)="goto('dashboard')">
+        <li nz-menu-item class="menu-data" [nzSelected]="true" (click)="goto('admin/dashboard')">
             <nz-icon nzType="desktop" nzTheme="outline" />
             <span>Dashboard</span>
           </li>
         <li nz-submenu nzTitle="Setup" nzIcon="appstore">
           <ul>
-            <li nz-menu-item class="menu-data">Tom</li>
-            <li nz-menu-item class="menu-data">Bill</li>
-            <li nz-menu-item class="menu-data">Alex</li>
+            <li nz-menu-item class="menu-data" routerLink="setup/user-setup">User Setup</li>
+            <li nz-menu-item class="menu-data" routerLink="setup/district-setup">District Setup</li>
+            <li nz-menu-item class="menu-data" routerLink="setup/tahasil-setup">Tahasil Setup</li>
+            <li nz-menu-item class="menu-data" routerLink="setup/ri-setup">RI Setup</li>
+            <li nz-menu-item class="menu-data" routerLink="setup/village-setup">Village Setup</li>
+            <li nz-menu-item class="menu-data" routerLink="setup/kisam-setup">Kisam Setup</li>
+            <li nz-menu-item class="menu-data" routerLink="setup/user-to-area-mapping">User to Area Map</li>
           </ul>
         </li>
-        <li nz-menu-item class="menu-data" (click)="goto('dashboard/storage-info')">
+        <li nz-menu-item class="menu-data" (click)="goto('admin/storage-info')">
             <nz-icon nzType="rest" nzTheme="outline" />
             <span>Storage information</span>
           </li>
