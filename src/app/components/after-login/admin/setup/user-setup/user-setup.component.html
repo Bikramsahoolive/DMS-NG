@@ -28,7 +28,7 @@
               [nzFilterMultiple]="column.filterMultiple"
               [nzFilters]="column.listOfFilter"
               [nzFilterFn]="column.filterFn"
-              style="background-color: rgb(0, 132, 255); color: white;"
+              style="background-color: rgb(0, 132, 255); color: white; width: max-content; height: 50px; font-size: 11px;font-weight: bold; border-right:1px solid white"
             >
               {{ column.name }}
             </th>
@@ -37,21 +37,53 @@
       </thead>
       <tbody>
         @for (data of filterTable.data; track data) {
-          <tr>
-            <td>{{ data.status }}</td>
+          <tr style="background-color: rgb(232 249 255); border-right: 1px solid gainsboro;">
+            <td>{{ data.id }}</td>
+            <td><nz-icon nzType="form" nzTheme="outline" style="cursor: pointer;color: green; font-size: 20px;" /></td>
+            <td> @if(data.status!=='Active'){ <nz-switch [ngModel]='true' nzCheckedChildren="Inactive" nzUnCheckedChildren="Active" ></nz-switch>}
+                @else{ <nz-switch [ngModel]='false' nzCheckedChildren="Inactive" nzUnCheckedChildren="Active"></nz-switch>}
+            </td>
+            <td>{{ data.username }}</td>
             <td>{{ data.displayName }}</td>
-            <td>{{ data.role }}</td>
+            <td><nz-tag [nzColor]="presetColors[10]">{{ data.role }}</nz-tag></td>
+            <td>{{ data.email }}</td>
+            <td>{{ data.phone }}</td>
+            <td>{{ data.address }}</td>
+            <td><img src="{{data.photoURL}}" width="50" style="border-radius: 50%;" alt=""></td>
           </tr>
         }
       </tbody>
     </nz-table>
-
-   
     </div>
-    <div class="type">
-        <nz-float-button nzType="primary" style="right: 24px" [nzIcon]="icon"></nz-float-button>
-      </div>
-      <ng-template #icon>
-        <nz-icon nzType="plus-circle" nzTheme="twotone" />
-      </ng-template>
+    
+    
+      
 </div>
+
+<nz-modal [nzStyle]="{ top: '20px' }" [(nzVisible)]="isVisible" nzClosable="false" nzMaskClosable="false" nzTitle="Add User" nzCancelText="Close"  (nzOnCancel)="handleCancel()" nzOkText="Submit" (nzOnOk)="handleOk()">
+  <ng-container *nzModalContent>
+      <label for=""> <span>*</span>User Name</label>
+      <input nz-input placeholder="Enter your Username" [(ngModel)]="usernameValue" type="text" />
+      <label for=""> <span>*</span>Display Name</label>
+      <input nz-input placeholder="Enter your Name" [(ngModel)]="usernameValue" type="text" />
+      <label for=""> <span>*</span>Role</label>
+      <input nz-input placeholder="Enter your Name" [(ngModel)]="usernameValue" type="text" />
+      <label for=""> <span>*</span>Email Id</label>
+      <input nz-input placeholder="Enter your Name" [(ngModel)]="usernameValue" type="text" />
+      <label for=""> <span>*</span>Mobile No</label>
+      <input nz-input placeholder="Enter your Name" [(ngModel)]="usernameValue" type="text" />
+      <label for=""> Photo</label>
+      <input nz-input placeholder="Enter your Name" [(ngModel)]="usernameValue" type="text" />
+      <label for="">Address</label>
+      <input nz-input placeholder="Enter your Name" [(ngModel)]="usernameValue" type="text" />
+
+    
+  </ng-container>
+</nz-modal>
+
+<div class="type">
+  <nz-float-button nzType="primary" style="right: 24px" [nzIcon]="icon"></nz-float-button>
+</div>
+<ng-template #icon>
+  <nz-icon nzType="plus-circle" nzTheme="twotone" (click)="showModal()" />
+</ng-template>
