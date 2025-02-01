@@ -1,17 +1,17 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule,NzIconService } from 'ng-zorro-antd/icon';
-import { FileExcelOutline, PlusCircleTwoTone,FormOutline} from '@ant-design/icons-angular/icons'
+import { FileExcelOutline, PlusCircleTwoTone,FormOutline,InboxOutline,CloseOutline} from '@ant-design/icons-angular/icons'
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzFloatButtonModule } from 'ng-zorro-antd/float-button';
 import { presetColors } from 'ng-zorro-antd/core/color';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzSwitchModule } from 'ng-zorro-antd/switch';
-
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzModalModule } from 'ng-zorro-antd/modal';
-
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { NzUploadChangeParam, NzUploadModule, NzUploadXHRArgs } from 'ng-zorro-antd/upload';
 import {
   NzTableFilterFn,
   NzTableFilterList,
@@ -19,6 +19,7 @@ import {
   NzTableSortFn,
   NzTableSortOrder
 } from 'ng-zorro-antd/table';
+import { HttpClient } from '@angular/common/http';
 
 interface ItemData {
   id:number,
@@ -32,26 +33,29 @@ interface ItemData {
   photoURL:string
 }
 
-interface ColumnItem {
-  name: string;
-  sortOrder: NzTableSortOrder | null;
-  sortFn: NzTableSortFn<ItemData> | null;
-  listOfFilter: NzTableFilterList;
-  filterFn: NzTableFilterFn<ItemData> | null;
-  filterMultiple: boolean;
-  sortDirections: NzTableSortOrder[];
-}
+// interface ColumnItem {
+//   name: string;
+//   sortOrder: NzTableSortOrder | null;
+//   sortFn: NzTableSortFn<ItemData> | null;
+//   listOfFilter: NzTableFilterList;
+//   filterFn: NzTableFilterFn<ItemData> | null;
+//   filterMultiple: boolean;
+//   sortDirections: NzTableSortOrder[];
+// }
 
 @Component({
   selector: 'app-user-setup',
   imports: [FormsModule,NzButtonModule,NzIconModule,NzInputModule,NzTableModule,
-    NzFloatButtonModule,NzTagModule,NzSwitchModule,NzModalModule],
+    NzFloatButtonModule,NzTagModule,NzSwitchModule,NzModalModule,NzSelectModule,
+    NzUploadModule],
   templateUrl: './user-setup.component.html',
   styleUrl: './user-setup.component.css'
 })
 export class UserSetupComponent {
-  constructor(private iconService :NzIconService ){
-    this.iconService.addIcon(FileExcelOutline,PlusCircleTwoTone,FormOutline);
+
+  
+  constructor(private iconService :NzIconService,private messageService: NzMessageService,private http: HttpClient ){
+    this.iconService.addIcon(FileExcelOutline,PlusCircleTwoTone,FormOutline,InboxOutline,CloseOutline);
   }
 
 
@@ -59,8 +63,6 @@ export class UserSetupComponent {
   // readonly customColors = ['#f50', '#2db7f5', '#87d068', '#108ee9'];
 
 
-  usernameValue?: string;
-  displaynameValue?: string;
 
 
   listOfColumns: any[] = [
@@ -104,6 +106,9 @@ export class UserSetupComponent {
     {name:'Address'},
     {name:'Photo'}
   ];
+
+
+
   listOfData: ItemData[] = [
     {
       id:1,
@@ -143,20 +148,72 @@ export class UserSetupComponent {
 
 
 
-  isVisible = false;
+  isVisibleModal1 = false;
+
+
+  usernameValue:string='';
+  displaynameValue:string='';
+  emailValue:string='';
+  phoneValue:string='';
+  addressValue:string='';
+  roleValue:string='';
+  fileListValue:any[]=[];
+
 
   showModal(): void {
-    this.isVisible = true;
+    this.isVisibleModal1 = true;
   }
 
   handleOk(): void {
     console.log('Button ok clicked!');
-    this.isVisible = false;
+    // this.isVisibleModal1 = false;
   }
 
-  handleCancel(): void {
+  handleReset(): void {
     // alert('Button cancel clicked!');
-    this.isVisible = false;
+
+    this.usernameValue='';
+  this.displaynameValue='';
+  this.emailValue='';
+  this.phoneValue='';
+  this.addressValue='';
+  this.roleValue='';
+  this.fileListValue=[];
+
+  }
+ 
+  closeModal(){
+    this.isVisibleModal1 = false;
+  }
+
+
+  customRequest = (item: NzUploadXHRArgs):any => {
+    const formData = new FormData();
+    formData.append('file', item.file as any);
+
+    return this.http.post('/your-upload-endpoint', formData).subscribe({
+      next: (response) => {
+        console.log('Upload successful:', response);
+        item.onSuccess!(response, item.file, event);
+      },
+      error: (err) => {
+        console.error('Upload error:', err);
+        item.onError!(err, item.file);
+      }
+    });
+  };
+
+  handleChange({ file, fileList }: NzUploadChangeParam): void {
+   
+    const status = file.status;
+    if (status !== 'uploading') {
+      // console.log(file, fileList);
+    }
+    if (status === 'done') {
+      this.messageService.success(`${file.name} file uploaded successfully.`);
+    } else if (status === 'error') {
+      this.messageService.error(`${file.name} file upload failed.`);
+    }
   }
 
 

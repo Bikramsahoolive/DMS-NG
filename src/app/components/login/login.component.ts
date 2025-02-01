@@ -7,9 +7,19 @@ import { NzIconModule, NzIconService } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzToolTipModule } from 'ng-zorro-antd/tooltip';
 import { LoginOutline,UserOutline,LockOutline  } from '@ant-design/icons-angular/icons';
+import { NgxSpinnerModule,NgxSpinnerService  } from "ngx-spinner";
+
+
+
+interface NgxSpinnerConfig {
+  type?: string;
+}
+
 @Component({
   selector: 'app-login',
-  imports: [NgbCarouselModule,ReactiveFormsModule,CommonModule,NzIconModule, NzInputModule, NzToolTipModule],
+  imports: [NgbCarouselModule,ReactiveFormsModule,CommonModule,NzIconModule, NzInputModule, NzToolTipModule,
+    NgxSpinnerModule
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
   providers: [],
@@ -40,7 +50,7 @@ export class LoginComponent {
 	pauseOnHover = true;
 	pauseOnFocus = false;
 
-  constructor(private router: Router,private iconService: NzIconService) {
+  constructor(private router: Router,private iconService: NzIconService, private spinner:NgxSpinnerService) {
     this.iconService.addIcon(LoginOutline,UserOutline,LockOutline);
    }
 
@@ -81,6 +91,8 @@ export class LoginComponent {
       this.invalidCaptcha =true;
     }else{
       this.goto('admin/dashboard')
+      this.spinner.show();
+      setTimeout(()=>this.spinner.hide(),2000);
     }
     
  

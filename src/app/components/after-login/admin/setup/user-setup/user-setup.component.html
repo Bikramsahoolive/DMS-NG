@@ -17,7 +17,8 @@
     </div>
 
     <div class="table">
-        <nz-table #filterTable [nzData]="listOfData" nzTableLayout="fixed">
+        <nz-table #filterTable [nzData]="listOfData" nzTableLayout="fixed" nzShowPagination
+        nzShowSizeChanger [nzPaginationType]="'small'" [nzSize]="'small'" [nzShowTotal]="totalTemplate">
       <thead >
         <tr>
           @for (column of listOfColumns; track column) {
@@ -54,28 +55,56 @@
         }
       </tbody>
     </nz-table>
+    <ng-template #totalTemplate let-total let-range="range">
+      Showing {{ range[0] }} - {{ range[1] }} of {{ total }} items
+    </ng-template>
     </div>
     
     
       
 </div>
 
-<nz-modal [nzStyle]="{ top: '20px' }" [(nzVisible)]="isVisible" nzClosable="false" nzMaskClosable="false" nzTitle="Add User" nzCancelText="Close"  (nzOnCancel)="handleCancel()" nzOkText="Submit" (nzOnOk)="handleOk()">
+<nz-modal [nzStyle]="{ top: '20px' }" [(nzVisible)]="isVisibleModal1" nzClosable="false" nzMaskClosable="false" nzTitle="Add User" nzCancelText="Reset"  (nzOnCancel)="handleReset()" nzOkText="Submit" (nzOnOk)="handleOk()">
+  
   <ng-container *nzModalContent>
+    <nz-icon nzType="close" nzTheme="outline" style="position: absolute; right: 20px; top: 20px; cursor: pointer;" (click)="closeModal()" />
       <label for=""> <span>*</span>User Name</label>
       <input nz-input placeholder="Enter your Username" [(ngModel)]="usernameValue" type="text" />
       <label for=""> <span>*</span>Display Name</label>
-      <input nz-input placeholder="Enter your Name" [(ngModel)]="usernameValue" type="text" />
+      <input nz-input placeholder="Enter your Name" [(ngModel)]="displaynameValue" type="text" />
       <label for=""> <span>*</span>Role</label>
-      <input nz-input placeholder="Enter your Name" [(ngModel)]="usernameValue" type="text" />
+      <nz-select ngModel="lucy" [nzSize]="'default'" style="width: 100%;" [(ngModel)]="roleValue" nzPlaceHolder="--select--">
+        <nz-option nzValue="ADMIN" nzLabel="ADMIN"></nz-option>
+        <nz-option nzValue="DEO" nzLabel="DEO"></nz-option>
+        <nz-option nzValue="RK" nzLabel="RECORD KEEPER" nzDisabled></nz-option>
+      </nz-select>
       <label for=""> <span>*</span>Email Id</label>
-      <input nz-input placeholder="Enter your Name" [(ngModel)]="usernameValue" type="text" />
+      <input nz-input placeholder="Enter your Name" [(ngModel)]="emailValue" type="email" />
       <label for=""> <span>*</span>Mobile No</label>
-      <input nz-input placeholder="Enter your Name" [(ngModel)]="usernameValue" type="text" />
+      <input nz-input placeholder="Enter your Name" maxlength="10" [(ngModel)]="phoneValue" type="text" />
       <label for=""> Photo</label>
-      <input nz-input placeholder="Enter your Name" [(ngModel)]="usernameValue" type="text" />
+      <nz-upload
+      nzType="drag"
+      [nzMultiple]="true"
+      nzAction="url"
+      [nzCustomRequest]="customRequest"
+      (nzChange)="handleChange($event)"
+      [nzFileList]="fileListValue"
+      [nzSize]="4048"
+      [nzFileType]="'image/png,image/jpeg,application/pdf'"
+      [nzListType]="'picture'"
+      [nzShowButton]="true"
+    >
+      <p class="ant-upload-drag-icon">
+        <nz-icon nzType="inbox" />
+      </p>
+      <p class="ant-upload-text">Click or drag file to this area to upload</p>
+      <p class="ant-upload-hint">
+        Support for a single or bulk upload. Strictly prohibit from uploading company data or other band files
+      </p>
+    </nz-upload>
       <label for="">Address</label>
-      <input nz-input placeholder="Enter your Name" [(ngModel)]="usernameValue" type="text" />
+      <textarea nz-input placeholder="Enter your address max 100 words." maxlength="100" [(ngModel)]="addressValue" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
 
     
   </ng-container>
